@@ -9,13 +9,17 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
+// Argon2Algorithm represents the algorithm enum type
 type Argon2Algorithm uint8
 
+// Algorithm enum const for choosing either argon2i or argon2id implementation for password hashing
 const (
 	AlgorithmArgon2id Argon2Algorithm = iota
 	AlgorithmArgon2i
 )
 
+// Argon2Params setting struct
+// This is used to set the used argon2 params which will be used during key derivation process
 type Argon2Params struct {
 	Algorithm  Argon2Algorithm
 	SaltLength uint32
@@ -23,7 +27,7 @@ type Argon2Params struct {
 	Time       uint32
 	Memory     uint32
 	Threads    uint8
-	Version    int
+	version    int
 }
 
 // argon2AlgorithmToString converts the algorithm to its string representation
@@ -39,6 +43,8 @@ func argon2AlgorithmToString(alg Argon2Algorithm) (string, error) {
 	}
 }
 
+// argon2StringAlgorithm converts the string to its algorithm enum representation
+// returns algorithm as Argon2Algorithm enum or error
 func argon2StringToAlgorithm(alg string) (Argon2Algorithm, error) {
 	switch alg {
 	case "argon2id":
@@ -118,7 +124,7 @@ func VerifyArgon2(password string, encodedHash string) (bool, error) {
 	}
 
 	// version check
-	if p.Version != argon2.Version {
+	if p.version != argon2.Version {
 		return false, ErrVersionMismatch
 	}
 
@@ -154,6 +160,8 @@ func EncodeArgon2(hash []byte, salt []byte, p *Argon2Params) (string, error) {
 	return enc, nil
 }
 
+// DecodeArgon2 decodes a given Argon2 bas64 string
+// returns decoded hash, salt and params or error
 func DecodeArgon2(enc string) ([]byte, []byte, *Argon2Params, error) {
 	// parse encoded hash
 	vals := strings.Split(enc, "$")
@@ -174,7 +182,7 @@ func DecodeArgon2(enc string) ([]byte, []byte, *Argon2Params, error) {
 	p.Algorithm = alg
 
 	// read argon2 version
-	_, err = fmt.Sscanf(vals[2], "v=%d", &p.Version)
+	_, err = fmt.Sscanf(vals[2], "v=%d", &p.version)
 
 	if err != nil {
 		return nil, nil, nil, err
