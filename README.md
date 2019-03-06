@@ -13,7 +13,7 @@ To encode a a given hash and salt use `func EncodeArgon2(hash []byte, salt []byt
 
 The package also provides a verification mechanism to verfiy an encoded hash against a given passwort, to do so use `func VerifyArgon2(password string, encodedHash string) (bool, error)`
 
-For params please have a look at the argon2 documentation and use the follwing struct.
+For params please have a look at the argon2 documentation and use the following struct.
 
 ```
 type Argon2Params struct {
@@ -28,7 +28,7 @@ type Argon2Params struct {
 
 ## Example
 
-In this short two short examples, we provide a brief overview how to use this package to first create a new hash of a given passwort and in the second one will show you how to verify a passwort.
+In this two examples, we provide a brief overview of how to use this package, to first create a new hash of a given passwort and in the second one we will show you how to verify a password.
 
 Generate new hash:
 
