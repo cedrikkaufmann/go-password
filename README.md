@@ -57,11 +57,11 @@ if err != nil {
     panic(err)
 }
 
-db.SaveHash(user, enc) // This is not part of the package, just and example usage of the encoded hash, for future authentication
+db.SaveHash(user, enc) // This is not part of the package, just an example usage of the encoded hash, for future authentication
 
 ```
 
-Authenaticate user:
+Authenticate a user's password:
 
 ```
 user := "john@example.com"
