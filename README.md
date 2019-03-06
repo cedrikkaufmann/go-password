@@ -69,7 +69,7 @@ password := "some_password_eg_from_webform"
 
 userHash := db.GetHash(user)
 
-passwordValid, err := password.VerifyArgon2(password, enc)
+passwordValid, err := password.VerifyArgon2(password, userHash)
 
 if err != nil {
     panic(err)
